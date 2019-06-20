@@ -3,7 +3,7 @@ $(function () {
     var pageOne = $('#page-one').kmPager({
         pageSize: 10,
         dataTotal: 256,
-        pageCurr: 25,
+        pageCurr: 26,
         // pageShow: 7,
         onPage : function (n) {
             console.log(n);

@@ -184,7 +184,7 @@
                     jq.config.onPage(pageList[0] - 1);
                 } else if (curr === (pageShow + 2)) {
                     // 下一页
-                    jq.config.onPage(pageList[pageList.length - 1] + 1);
+                    jq.config.onPage(jq.config.pageCurr + 1);
                 } else if (curr === (pageShow + 3)) {
                     // 尾页
                     jq.config.onPage(pageTotal);
