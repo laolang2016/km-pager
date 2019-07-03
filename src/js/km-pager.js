@@ -22,8 +22,7 @@
      * @param jq
      */
     function checkConfig(jq) {
-        let config = jq.config;
-        if (null == config.pageSize || null == config.dataTotal || null == config.pageShow) {
+        if (null == jq.config.pageSize || null == jq.config.dataTotal || null == jq.config.pageShow) {
             throw "pageSize , dataTotal , pageShow 必填";
         }
     }
@@ -33,25 +32,23 @@
      * @param jq
      */
     function fixPageShow(jq) {
-        let config = jq.config;
-        let realPageShow = config.dataTotal / config.pageSize;
-        if (config.dataTotal % config.pageSize > 0) {
+        let realPageShow = jq.config.dataTotal / jq.config.pageSize;
+        if (jq.config.dataTotal % jq.config.pageSize > 0) {
             realPageShow++;
         }
 
-        if (realPageShow < config.pageShow) {
-            config.pageShow = realPageShow;
+        if (realPageShow < jq.config.pageShow) {
+            jq.config.pageShow = realPageShow;
         }
     }
 
     function initStruct(jq) {
-        let config = jq.config;
         let div = jq.get(0);
         let ul = $('<ul>');
         // 首页 上一页
-        let $liFirst = buildLi(config.lang.firstPageText);
-        let $liPrev = buildLi(config.lang.prePageText);
-        if (1 === config.pageCurr) {
+        let $liFirst = buildLi(jq.config.lang.firstPageText);
+        let $liPrev = buildLi(jq.config.lang.prePageText);
+        if (1 === jq.config.pageCurr) {
             $liFirst.attr('class', 'km-pager-disabled');
             $liPrev.attr('class', 'km-pager-disabled');
         }
@@ -63,7 +60,7 @@
         // 页码
         for (let i = 0; i < pagelist.length; i++) {
             let $li = buildLi(pagelist[i]);
-            if (pagelist[i] === config.pageCurr) {
+            if (pagelist[i] === jq.config.pageCurr) {
                 $li.attr('class', 'km-pager-curr');
             }
             ul.append($li.get(0));
@@ -71,9 +68,9 @@
 
         let pageTotal = getPageTotal(jq);
         // 下一页 尾页
-        let $liNext = buildLi(config.lang.nextPageText);
-        let $liLast = buildLi(config.lang.lastPageText);
-        if (pageTotal === config.pageCurr) {
+        let $liNext = buildLi(jq.config.lang.nextPageText);
+        let $liLast = buildLi(jq.config.lang.lastPageText);
+        if (pageTotal === jq.config.pageCurr) {
             $liNext.attr('class', 'km-pager-disabled');
             $liLast.attr('class', 'km-pager-disabled');
         }
