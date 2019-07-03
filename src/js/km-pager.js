@@ -1,4 +1,4 @@
-;(function ($, window, document, undefined) {
+;(function ($) {
 
 
     /**
@@ -22,7 +22,7 @@
      * @param jq
      */
     function checkConfig(jq) {
-        var config = jq.config;
+        let config = jq.config;
         if (null == config.pageSize || null == config.dataTotal || null == config.pageShow) {
             throw "pageSize , dataTotal , pageShow 必填";
         }
@@ -33,9 +33,8 @@
      * @param jq
      */
     function fixPageShow(jq) {
-        var config = jq.config;
-        var pageTotal = getPageTotal(jq);
-        var realPageShow = config.dataTotal / config.pageSize;
+        let config = jq.config;
+        let realPageShow = config.dataTotal / config.pageSize;
         if (config.dataTotal % config.pageSize > 0) {
             realPageShow++;
         }
@@ -46,12 +45,12 @@
     }
 
     function initStruct(jq) {
-        var config = jq.config;
-        var div = jq.get(0);
-        var ul = $('<ul>');
+        let config = jq.config;
+        let div = jq.get(0);
+        let ul = $('<ul>');
         // 首页 上一页
-        var $liFirst = buildLi(config.lang.firstPageText);
-        var $liPrev = buildLi(config.lang.prePageText);
+        let $liFirst = buildLi(config.lang.firstPageText);
+        let $liPrev = buildLi(config.lang.prePageText);
         if (1 === config.pageCurr) {
             $liFirst.attr('class', 'km-pager-disabled');
             $liPrev.attr('class', 'km-pager-disabled');
@@ -60,20 +59,20 @@
         ul.append($liPrev.get(0));
 
 
-        var pagelist = getCurrPagelist(jq);
+        let pagelist = getCurrPagelist(jq);
         // 页码
-        for (var i = 0; i < pagelist.length; i++) {
-            var $li = buildLi(pagelist[i]);
+        for (let i = 0; i < pagelist.length; i++) {
+            let $li = buildLi(pagelist[i]);
             if (pagelist[i] === config.pageCurr) {
                 $li.attr('class', 'km-pager-curr');
             }
             ul.append($li.get(0));
         }
 
-        var pageTotal = getPageTotal(jq);
+        let pageTotal = getPageTotal(jq);
         // 下一页 尾页
-        var $liNext = buildLi(config.lang.nextPageText);
-        var $liLast = buildLi(config.lang.lastPageText);
+        let $liNext = buildLi(config.lang.nextPageText);
+        let $liLast = buildLi(config.lang.lastPageText);
         if (pageTotal === config.pageCurr) {
             $liNext.attr('class', 'km-pager-disabled');
             $liLast.attr('class', 'km-pager-disabled');
@@ -91,7 +90,7 @@
      * @returns {*|jQuery|HTMLElement}
      */
     function buildLi(text) {
-        var li = $('<li>');
+        let li = $('<li>');
         li.append(
             $('<a>')
                 .attr('href', 'javascript:void(0);')
@@ -107,10 +106,10 @@
      * @returns {number}
      */
     function getPageTotal(jq) {
-        var total = jq.config.dataTotal;
-        var size = jq.config.pageSize;
-        var remainder = total % size;
-        var pageTotal = (total - remainder) / size;
+        let total = jq.config.dataTotal;
+        let size = jq.config.pageSize;
+        let remainder = total % size;
+        let pageTotal = (total - remainder) / size;
         if (remainder > 0) {
             pageTotal++;
         }
@@ -123,12 +122,12 @@
      * @returns {Array}
      */
     function getCurrPagelist(jq) {
-        var pageTotal = getPageTotal(jq);
-        var pageShow = jq.config.pageShow;
-        var halfSize = parseInt(jq.config.pageShow / 2);
-        var curr = jq.config.pageCurr;
+        let pageTotal = getPageTotal(jq);
+        let pageShow = jq.config.pageShow;
+        let halfSize = parseInt(jq.config.pageShow / 2);
+        let curr = jq.config.pageCurr;
 
-        var start = 1;
+        let start = 1;
 
         // 计算开视页
         // 显示页数为偶数
@@ -149,15 +148,15 @@
         }
 
         // 计算开始页
-        var end = start + pageShow - 1;
+        let end = start + pageShow - 1;
         // 修正开始页
         if (end > pageTotal) {
             end = pageTotal;
         }
 
         // 显示的页码列表
-        var pageArray = [];
-        for (var i = start; i <= end; i++) {
+        let pageArray = [];
+        for (let i = start; i <= end; i++) {
             pageArray.push(i);
         }
         return pageArray;
@@ -168,13 +167,13 @@
      * @param jq
      */
     function initClick(jq) {
-        var ul = jq.children('ul');
-        var pageShow = jq.config.pageShow;
+        let ul = jq.children('ul');
+        let pageShow = jq.config.pageShow;
         pageShow = parseInt(pageShow);
-        var pageTotal = getPageTotal(jq);
-        var pageList = getCurrPagelist(jq);
+        let pageTotal = getPageTotal(jq);
+        let pageList = getCurrPagelist(jq);
         ul.children('li').each(function (index) {
-            var curr = parseInt(index);
+            let curr = parseInt(index);
             $(this).on('click', function () {
                 // 首页
                 if (0 === curr) {
@@ -220,8 +219,8 @@
         }
 
         // 获得配置，这里为了得到用户的配置项，覆盖默认配置项，并保存到当前jquery插件实例中
-        var _opts = $.extend({}, $.fn.kmPager.defaults, options);
-        var jq = this;
+        let _opts = $.extend({}, $.fn.kmPager.defaults, options);
+        let jq = this;
         jq.config = _opts;
 
         // 链式调用

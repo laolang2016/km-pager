@@ -1,8 +1,8 @@
 $(function () {
     console.log('km pager');
     var pageOne = $('#page-one').kmPager({
-        pageSize: 1,
-        dataTotal: 1,
+        pageSize: 10,
+        dataTotal: 256,
         pageCurr: 1,
         // pageShow: 7,
         onPage : function (n) {

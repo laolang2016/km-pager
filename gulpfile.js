@@ -4,7 +4,7 @@ const rename = require('gulp-rename');
 const autoprefixer = require('gulp-autoprefixer');
 const cleancss = require('gulp-clean-css');
 const sass = require('gulp-sass');
-
+const babel = require("gulp-babel");
 const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 
@@ -39,7 +39,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('uglifyjs',function () {
-    return gulp.src('src/js/**/*.js')
+    return gulp.src('dist/js/**/*.js')
         .pipe(uglify())
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('dist/js'));
@@ -52,8 +52,14 @@ gulp.task('cleancss',function () {
         .pipe(gulp.dest('dist/css'));
 });
 
+gulp.task("babeles5", function () {
+    return gulp.src("src/js/**/*.js")// ES6 源码存放的路径
+        .pipe(babel())
+        .pipe(gulp.dest("dist/js")); //转换成 ES5 存放的路径
+});
+
 gulp.task('build',
-    gulp.series('clean','uglifyjs','copyjs', 'sass','cleancss','sass')
+    gulp.series('clean','copyjs','babeles5','uglifyjs','copyjs', 'sass','cleancss','sass')
 );
 
 gulp.task('default', gulp.series('clean', gulp.parallel('copyjs', 'sass'),

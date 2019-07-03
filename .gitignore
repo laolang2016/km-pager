@@ -1,6 +1,5 @@
 .attach*
 
 .idea
-dist
 node_modules
 
